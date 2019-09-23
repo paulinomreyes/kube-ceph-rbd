@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-ceph
+  name: nginx-ceph
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-master
+  volumes:
+    - name: ceph-rbd-storage
+      persistentVolumeClaim:
+        claimName: testclaim
+  containers:
+  - image: nginx
+    name: nginx-ceph
+    resources: {}
+    volumeMounts:
+      - mountPath: "/data"
+        name: ceph-rbd-storage
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
